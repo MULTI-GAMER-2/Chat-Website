@@ -35,31 +35,21 @@ ChatContent.style.display = 'none'
 
 
 
- var PromptMsg = prompt("Type here your username. Don't use whitespaces, use this instead - ");
+ var PromptMsg; 
 var filter = new Filter();
 function SaveUser(){
  
+PromptMsg = prompt("Type here your username. Don't use whitespaces, use this instead - ");
 
 
-    var Confirmation = window.confirm('Are you sure that you want to set your username to: '+ PromptMsg +'. This name will be public to chat!');
-  
     if(PromptMsg === "" || PromptMsg === null || PromptMsg === undefined || PromptMsg.match(/\s/g)){
       alert("Username can't be empty!")
     ChatContent.style.display = 'none';
     window.location.reload();
     }else{
+    localStorage.setItem("Username", PromptMsg);
+ChatContent.style.display = "block"
 
-    ChatContent.style.display = 'block';
-
-
-        if(Confirmation == true){
-
-             
-
-        }else{
-        
-window.location.reload();
-        }
 }
 }
 
@@ -70,19 +60,16 @@ window.location.reload();
 
 function DetectChatContent(){
 
-if (PromptMsg === "" || PromptMsg === undefined || PromptMsg === null || PromptMsg.match(/\s/g)) { 
-
-window.location.reload();
+if(localStorage.getItem("Username").match(/\s/g)){
+    ChatContent.style.display = 'none';
 }else{
-    
-        ChatContent.style.display = 'block';
+ChatContent.style.display = 'block';
 
-    
-} 
+}
 }
 
 
-setInterval(DetectChatContent, 1000)
+setInterval(DetectChatContent, 1)
 
 
 
