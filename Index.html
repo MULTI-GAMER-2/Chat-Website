@@ -60,7 +60,7 @@ ChatContent.style.display = "block"
 
 function DetectChatContent(){
 
-if(localStorage.getItem("Username").match(/\s/g)){
+if(localStorage.getItem("Username").value.match(/\s/g)){
     ChatContent.style.display = 'none';
 }else{
 ChatContent.style.display = 'block';
