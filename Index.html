@@ -35,11 +35,11 @@ ChatContent.style.display = 'none'
 
 
 
- var PromptMsg; 
+ var PromptMsg = prompt("Type here your username. Don't use whitespaces, use this instead - ");
+
 var filter = new Filter();
 function SaveUser(){
  
-PromptMsg = prompt("Type here your username. Don't use whitespaces, use this instead - ");
 
 
     if(PromptMsg === "" || PromptMsg === null || PromptMsg === undefined || PromptMsg.match(/\s/g)){
