@@ -72,7 +72,7 @@ function DetectChatContent(){
 
 if (PromptMsg === "" || PromptMsg === undefined || PromptMsg === null || PromptMsg.match(/\s/g)) { 
 
-document.write("Reload the code to reload prompt \n");
+window.location.reload();
 }else{
     
         ChatContent.style.display = 'block';
@@ -258,7 +258,7 @@ img{
   width: 15vw;
   height: 7.5vh;
   margin-left: 30vw;
-  margin-top: 80vh;
+  margin-top: 75vh;
   transition: 0.7s ease-in-out;
   
   
