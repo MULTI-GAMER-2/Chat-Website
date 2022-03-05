@@ -1,0 +1,270 @@
+<!DOCTYPE html>
+<html lang="en" style="scroll-behavior: smooth;" onload="GetRoomMsg();">
+  <div onload="DetectChatContent()">
+   
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Chat</title>
+</head>
+<body onload="GetMsg()">
+    <div>
+    <center>
+            </center>
+</div>
+
+<div id="Container">
+    <div id="ChatContent">
+        <center>
+         <div id="RollDownBtn" onclick="RollMessages()"><img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRAhnItUC8uknlvF_8rYTDV7nR0-Cy8dUJiHnKrGj3s0nC0zhys&s" alt="ArrowDown"></div>
+        <div id="WriteYourMessage">
+            <input type="text" name="WriteMsg" id="WriteMsg" maxlength="30"><button onclick="SendMsg();" id="SendBtn">Send</button>
+            </div>
+            </center>
+        <div id="messages">
+          
+        </div>
+    </div>
+</div>
+</body>
+<script src="https://cdn.jsdelivr.net/gh/bureyburey/bad-words-compact@master/bad-words-compact.min.js"></script>
+<script src="https://authapibymult1g4m3r.netlify.app/api.js"></script>
+<script>
+ChatContent.style.display = 'none'
+
+
+
+ var PromptMsg = prompt("Type here your username. Don't use whitespaces, use this instead - ");
+var filter = new Filter();
+function SaveUser(){
+ 
+
+
+    var Confirmation = window.confirm('Are you sure that you want to set your username to: '+ PromptMsg +'. This name will be public to chat!');
+  
+    if(PromptMsg === "" || PromptMsg === null || PromptMsg === undefined || PromptMsg.match(/\s/g)){
+      alert("Username can't be empty!")
+    ChatContent.style.display = 'none';
+    window.location.reload();
+    }else{
+
+    ChatContent.style.display = 'block';
+
+
+        if(Confirmation == true){
+
+             
+
+        }else{
+        
+window.location.reload();
+        }
+}
+}
+
+
+
+
+
+
+function DetectChatContent(){
+
+if (PromptMsg === "" || PromptMsg === undefined || PromptMsg === null || PromptMsg.match(/\s/g)) { 
+
+document.write("Reload the code to reload prompt \n");
+}else{
+    
+        ChatContent.style.display = 'block';
+
+    
+} 
+}
+
+
+setInterval(DetectChatContent, 1000)
+
+
+
+var firebaseDatabase = firebase.database();
+
+function SendMsg(){
+    
+    
+     
+  if(WriteMsg.value == "" || WriteMsg.value == null || WriteMsg.value == undefined || WriteMsg.value.match(/\s/g) || WriteMsg.value.length > 30 ){
+
+
+  }else{
+    firebaseDatabase.ref('WebsiteChat').push({
+
+        Username: filter.clean(PromptMsg.replace('<', '  [Don´t use XSS attacks - Administrator]  ')),
+        Message: filter.clean(WriteMsg.value.replace('<', '  [Don´t use XSS attacks - Administrator]  '))
+
+    });
+    
+  }
+
+    
+}
+
+
+
+
+function GetMsg(){
+
+    firebaseDatabase.ref('/WebsiteChat/').on('child_added', function(snapshot) {
+  var data = snapshot.val();
+
+  messages.innerHTML += '<div id="AllMessages"><br><div id="UsernameFromMsg">'+ data.Username +'</div><br><div id="MessageData">'+ data.Message +'</div><br></div><br><br>';
+});
+
+
+
+}
+
+
+
+const img = document.querySelector('img')
+
+function RollMessages(){
+  
+    window.scrollTo(0,document.body.scrollHeight)
+  
+    
+  }
+
+
+</script>
+<style>
+
+input{
+  
+  outline: 0;
+  
+}
+
+#WriteYourMessage{
+
+margin-top: 89vh;
+margin-left: -1.9%;
+position: fixed;
+height: 10vh;
+background-color: aqua;
+
+
+
+}
+
+#WriteYourRoomMessage{
+
+margin-top: 89vh;
+margin-left: -1.9%;
+position: fixed;
+height: 10vh;
+background-color: aqua;
+
+
+
+}
+#WriteMsg{
+
+    width: 70vw;
+    height: 7vw;
+    border-radius: 3vh;
+    border: 2px solid #000;
+    text-align: center;
+    font-size: 5vw;
+    margin-top: 2vh;
+}
+
+#WriteRoomMsg{
+
+    width: 70vw;
+    height: 7vw;
+    border-radius: 3vh;
+    border: 2px solid #000;
+    text-align: center;
+    font-size: 5vw;
+    margin-top: 2vh;
+}
+
+#SendBtn{
+
+    width: 27.70vw;
+    height: 5.2vh;
+    font-size: medium;
+    border-radius: 3vh;
+    border: 2px solid #000;
+    color: white;
+    background-color: #000;
+}
+
+#SendRoomBtn{
+
+    width: 27.70vw;
+    height: 5.2vh;
+    font-size: medium;
+    border-radius: 3vh;
+    border: 2px solid #000;
+    color: white;
+    background-color: #000;
+}
+#AllMessages{
+
+text-align: center;
+background-color: #ccffd3;
+border-radius: 4vh;
+margin-left: 3vw;
+width: 70vw;
+max-height: 50vh;
+font-size: 2.5vh;
+transition: 0.5s ease-in-out;
+
+
+
+}
+
+#RoomMessages{
+
+text-align: center;
+background-color: #ccffd3;
+border-radius: 4vh;
+margin-left: 3vw;
+width: 70vw;
+max-height: 50vh;
+font-size: 2.5vh;
+transition: 0.5s ease-in-out;
+
+
+
+}
+#LeavingBtn{
+  
+  position: fixed;
+  margin-left: 12vw;
+  width: 35vw;
+  height: 4vh;
+  background-color: black;
+  color: white;
+  border-radius: 20px;
+  font-size: 2vh;
+  transition: 0.7s ease-in-out;
+}
+
+img{
+  
+  position: fixed;
+  width: 15vw;
+  height: 7.5vh;
+  margin-left: 30vw;
+  margin-top: 80vh;
+  transition: 0.7s ease-in-out;
+  
+  
+}
+
+
+</style>
+  </div>
+</html>
